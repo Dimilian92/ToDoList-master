@@ -29,6 +29,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
+    private static  boolean TODO  ;
     private TaskDbHelper mHelper;
     private ListView mTaskListView;
     private ArrayAdapter<String> mAdapter;
@@ -78,7 +79,24 @@ public class MainActivity extends AppCompatActivity {
                         .create();
                 dialog.show();
                 return true;
+            case R.id.get_location:
+                LocationManager lm = (LocationManager) getSystemService(LOCATION_SERVICE);
 
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    return TODO;
+                }
+                Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "Log ;"+ String.valueOf(location.getLongitude())+" ,lat :"+ String.valueOf(location.getAltitude()), Toast.LENGTH_LONG);
+                    toast.show();
+                    return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -124,11 +142,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void get_location(MenuItem item) {
+   /*
+   Закомментил т.к. не знаю пока как делать дальше
+   public boolean get_location(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.get_location:
                 getLocation();
+                return true;
         }
+        return false;
     }
 
     void getLocation() {
@@ -148,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
                 "Log ;"+ String.valueOf(location.getLongitude())+" ,lat :"+ String.valueOf(location.getAltitude()), Toast.LENGTH_LONG);
         toast.show();
         Log.i("Info","Log ;"+ String.valueOf(location.getLongitude())+" ,lat :"+ String.valueOf(location.getAltitude()));
-    }
+    }*/
 
 
 }
